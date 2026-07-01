@@ -12,10 +12,7 @@
             font-family: -apple-system, sans-serif;
             background: #f4f4f9;
             padding: 20px;
-            height: 100vh;
-            overflow-y: auto;
-            /* 解决 iOS 弹出键盘时输入框看不见的问题 */
-            padding-bottom: 50px;
+            padding-bottom: 80px;
         }
 
         .card {
@@ -26,7 +23,8 @@
             margin-bottom: 20px;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
             padding: 12px;
             margin: 8px 0;
@@ -37,13 +35,19 @@
 
         button {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background: #007AFF;
             color: white;
             border: none;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .delete-btn {
+            background: #FF3B30;
+            padding: 5px 10px;
+            width: auto;
         }
 
         .log-item {
@@ -53,34 +57,31 @@
             padding: 10px;
             border-bottom: 1px solid #eee;
         }
-
-        .delete-btn {
-            width: auto;
-            padding: 5px 10px;
-            background: #FF3B30;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 12px;
-        }
     </style>
 </head>
 
 <body>
-    <div class="card">
-        <h2>IronLog 健身录入</h2>
 
+    <div class="card">
+        <h2>🔥 记录训练</h2>
         <select id="group-select" onchange="updateExerciseOptions()">
             <option value="">请选择部位</option>
         </select>
-
         <select id="exercise-select">
             <option value="">请先选择部位</option>
         </select>
-
         <input type="number" id="weight" placeholder="重量 (kg)">
         <input type="number" id="reps" placeholder="次数">
-        <button onclick="handleAddLogFromUI()">记录训练</button>
+        <button onclick="handleAddLogFromUI()">提交记录</button>
+    </div>
+
+    <div class="card">
+        <h3>⚙️ 管理</h3>
+        <input type="text" id="new-group-name" placeholder="新部位名称">
+        <button onclick="addNewGroup()" style="background: #34C759;">添加部位</button>
+        <input type="text" id="new-exercise-name" placeholder="新动作名称">
+        <button onclick="addNewExercise()" style="background: #34C759;">添加动作到选中部位</button>
+        <button onclick="initializeData()" style="background: #666;">一键初始化(重置)</button>
     </div>
 
     <div class="card">
@@ -89,7 +90,6 @@
     </div>
 
     <script src="app.js"></script>
-    <button onclick="initializeData()">一键初始化部位</button>
 </body>
 
 </html>
