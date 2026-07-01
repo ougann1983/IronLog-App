@@ -1,15 +1,27 @@
-// ...前面的 db 初始化代码不变...
+// 1. 初始化数据库 (确保这行在最前面，且写在任何函数之外)
+const db = new Dexie('IronLogDB');
+db.version(1).stores({
+    exercises: '++id,action,weight,timestamp'
+});
 
+// 2. 页面加载完成后立即初始化显示
+window.onload = refreshUI;
+
+// 3. 添加记录逻辑
 async function handleAdd() {
     const action = document.getElementById('action').value;
     const weight = parseFloat(document.getElementById('weight').value);
-    if (!action || !weight) return alert("请填写完整！");
 
-    // 写入数据库，加入完整的时间戳
+    if (!action || !weight) {
+        alert("请填写完整！");
+        return;
+    }
+
+    // 写入数据库
     await db.exercises.add({
         action,
         weight,
-        timestamp: new Date().toLocaleString() // 记录保存的那一刻
+        timestamp: new Date().toLocaleString()
     });
 
     document.getElementById('action').value = '';
@@ -17,19 +29,19 @@ async function handleAdd() {
     refreshUI();
 }
 
-// 删除记录的函数
+// 4. 删除逻辑
 async function deleteItem(id) {
     await db.exercises.delete(id);
     refreshUI();
 }
 
+// 5. 刷新界面逻辑
 async function refreshUI() {
     const logs = await db.exercises.toArray();
     const total = logs.reduce((sum, item) => sum + (item.weight || 0), 0);
     document.getElementById('total-tonnage').innerText = total;
 
     const list = document.getElementById('log-list');
-    // 给每行生成“删除”按钮
     list.innerHTML = logs.map(item => `
         <li style="margin-bottom: 10px; border-bottom: 1px solid #ccc;">
             <strong>${item.action}</strong>: ${item.weight}kg <br>
