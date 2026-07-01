@@ -31,5 +31,16 @@ async function refreshUI() {
         </div>
     `).join('');
 }
-
 window.onload = refreshUI;
+// 在你的 app.js 最后加上这段代码
+async function forceUpdate() {
+    if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        for (let registration of registrations) {
+            await registration.unregister(); // 注销旧缓存逻辑
+        }
+    }
+    // 强制刷新页面并清除浏览器缓存
+    window.location.reload(true);
+}
+
