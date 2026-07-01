@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IronLog</title>
     <link rel="manifest" href="manifest.json">
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
@@ -12,6 +12,10 @@
             font-family: -apple-system, sans-serif;
             background: #f4f4f9;
             padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+            /* 解决 iOS 弹出键盘时输入框看不见的问题 */
+            padding-bottom: 50px;
         }
 
         .card {
