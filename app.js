@@ -1,30 +1,40 @@
-const db = new Dexie("IronLogDB");
-db.version(1).stores({ exercises: '++id, action, weight, date' });
-
-// 页面加载时自动刷新列表
-window.onload = refreshUI;
+// ...前面的 db 初始化代码不变...
 
 async function handleAdd() {
     const action = document.getElementById('action').value;
     const weight = parseFloat(document.getElementById('weight').value);
+    if (!action || !weight) return alert("请填写完整！");
 
-    // 写入数据库
-    await db.exercises.add({ action, weight, date: new Date().toLocaleDateString() });
+    // 写入数据库，加入完整的时间戳
+    await db.exercises.add({
+        action,
+        weight,
+        timestamp: new Date().toLocaleString() // 记录保存的那一刻
+    });
 
-    // 清空输入框并刷新 UI
     document.getElementById('action').value = '';
     document.getElementById('weight').value = '';
     refreshUI();
 }
 
+// 删除记录的函数
+async function deleteItem(id) {
+    await db.exercises.delete(id);
+    refreshUI();
+}
+
 async function refreshUI() {
     const logs = await db.exercises.toArray();
-
-    // 离线运算：计算所有记录的总重量
     const total = logs.reduce((sum, item) => sum + (item.weight || 0), 0);
     document.getElementById('total-tonnage').innerText = total;
 
-    // 更新列表
     const list = document.getElementById('log-list');
-    list.innerHTML = logs.map(item => `<li>${item.action}: ${item.weight}kg</li>`).join('');
+    // 给每行生成“删除”按钮
+    list.innerHTML = logs.map(item => `
+        <li style="margin-bottom: 10px; border-bottom: 1px solid #ccc;">
+            <strong>${item.action}</strong>: ${item.weight}kg <br>
+            <small style="color: #666;">${item.timestamp}</small>
+            <button onclick="deleteItem(${item.id})">删除</button>
+        </li>
+    `).join('');
 }
