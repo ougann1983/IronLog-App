@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>IronLog Local</title>
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <div style="max-width: 400px; margin: 20px auto; font-family: sans-serif;">
+        <h2>IronLog 健身录入</h2>
+        <!-- 输入区域 -->
+        <input type="text" id="action" placeholder="动作名称 (如: 深蹲)">
+        <input type="number" id="weight" placeholder="重量 (kg)">
+        <button onclick="handleAdd()">记录</button>
+
+        <hr>
+        <!-- 看板区域 -->
+        <div id="stats" style="background: #f0f0f0; padding: 10px; border-radius: 8px;">
+            <p>今日总吨位: <span id="total-tonnage">0</span> kg</p>
+        </div>
+
+        <ul id="log-list"></ul>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
