@@ -69,9 +69,18 @@
 <body>
     <div class="card">
         <h2>IronLog 健身录入</h2>
-        <input type="text" id="action" placeholder="动作名称 (如: 深蹲)">
+
+        <select id="group-select" onchange="updateExerciseOptions()">
+            <option value="">请选择部位</option>
+        </select>
+
+        <select id="exercise-select">
+            <option value="">请先选择部位</option>
+        </select>
+
         <input type="number" id="weight" placeholder="重量 (kg)">
-        <button onclick="handleAdd()">记录</button>
+        <input type="number" id="reps" placeholder="次数">
+        <button onclick="handleAddLogFromUI()">记录训练</button>
     </div>
 
     <div class="card">
@@ -80,13 +89,7 @@
     </div>
 
     <script src="app.js"></script>
-
-    <button onclick="forceUpdate()" style="background: #666; margin-top: 20px;">
-        检查更新 (如遇故障请点击)
-    </button>
-
     <button onclick="initializeData()">一键初始化部位</button>
-
 </body>
 
 </html>
