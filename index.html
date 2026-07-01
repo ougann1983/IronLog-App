@@ -3,27 +3,79 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>IronLog Local</title>
-    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronLog</title>
     <link rel="manifest" href="manifest.json">
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            background: #f4f4f9;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .delete-btn {
+            width: auto;
+            padding: 5px 10px;
+            background: #FF3B30;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    </style>
 </head>
 
 <body>
-    <div style="max-width: 400px; margin: 20px auto; font-family: sans-serif;">
-        <h2>IronLog 健身录入（2）</h2>
+    <div class="card">
+        <h2>IronLog 健身录入</h2>
         <input type="text" id="action" placeholder="动作名称 (如: 深蹲)">
         <input type="number" id="weight" placeholder="重量 (kg)">
         <button onclick="handleAdd()">记录</button>
-
-        <hr>
-        <div id="stats" style="background: #f0f0f0; padding: 10px; border-radius: 8px;">
-            <p>今日总吨位: <span id="total-tonnage">0</span> kg</p>
-        </div>
-
-        <ul id="log-list" style="list-style: none; padding: 0;"></ul>
     </div>
 
-    <script src="app.js?t=202607011030"></script>
+    <div class="card">
+        <p>今日总吨位: <span id="total-tonnage">0</span> kg</p>
+        <div id="log-list"></div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 
 </html>
